@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
@@ -7,6 +7,7 @@ if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 ---@type LazySpec
 return {
+  {
   "AstroNvim/astrocore",
   ---@type AstroCoreOpts
   opts = {
@@ -27,11 +28,36 @@ return {
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
-        relativenumber = true, -- sets vim.opt.relativenumber
-        number = true, -- sets vim.opt.number
-        spell = false, -- sets vim.opt.spell
-        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-        wrap = false, -- sets vim.opt.wrap
+        scrolloff = 8, -- number of lines to keep above and below the cursor
+        sidescrolloff = 8, -- number of columns to keep at the sides of the cursor
+        number = true, -- show numberline
+        numberwidth = 2,     -- ljay: Minimum number of columns to use for the line number
+        list = true,         -- ljay: Show hidden characters
+
+        helpheight = 0,      -- ljay: Disable help window resizing
+        winwidth = 30,       -- ljay: Minimum width for active window
+        winminwidth = 1,     -- ljay: Minimum width for inactive windows
+        winheight = 1,       -- ljay: Minimum height for active window
+        winminheight = 1,    -- ljay: Minimum height for inactive window
+
+        showcmd = false,     -- ljay: Don't show command in status line
+        cmdwinheight = 5,    -- ljay: Command-line lines
+        equalalways = true,  -- ljay: Resize windows on split or close
+        colorcolumn = '+0',  -- ljay: Column highlight at textwidth's max character-limit
+
+        cursorlineopt = { 'number', 'screenline' },
+
+        pumwidth = 10,       -- ljay: Minimum width for the popup menu
+        pumblend = 10,       -- ljay: Popup blend
+
+        preserveindent = true, -- preserve indent structure as much as possible
+        textwidth = 120,    -- ljay: Text width maximum chars before wrapping
+        smarttab = true,    -- ljay: Tab insert blanks according to 'shiftwidth'
+        shiftround = true,  -- ljay: Round indent to multiple of 'shiftwidth'
+        autoindent = true,  -- ljay: Use same indenting on new lines
+        smartindent = true, -- ljay: Smart autoindenting on new lines
+        shiftwidth = 4, -- number of space inserted for indentation
+        tabstop = 4, -- number of space in a tab
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -50,6 +76,59 @@ return {
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
 
+        -- move cursor
+        ["gh"] = { "g^", desc = "Cursor to line begin" },
+        ["gl"] = { "g$", desc = "Cursor to line end" },
+        ["|"] = false,
+
+        -- move line
+        ["<leader>k"] = { '<cmd>move-2<CR>==', silent = true, desc = "Move line up" },
+        ["<leader>j"] = { '<cmd>move+<CR>==', silent = true, desc = "Move line down" },
+
+        -- find
+          ["<leader>fg"] = {
+            function()
+              require("telescope.builtin").live_grep {
+                additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+              }
+            end,
+            desc = "Find words in all files",
+          },
+
+        -- split, resize window
+        ["<leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
+        ["<leader>s"] = { "<cmd>split<cr>", desc = "Horizontal Split" },
+        ["<C-=>"] = { function() require("smart-splits").resize_up() end, desc = "Resize split up" },
+        ["<C-_>"] = { function() require("smart-splits").resize_down() end, desc = "Resize split down" },
+        ["<C-9>"] = { function() require("smart-splits").resize_left() end, desc = "Resize split left" },
+        ["<C-0>"] = { function() require("smart-splits").resize_right() end, desc = "Resize split right" },
+
+        -- others
+        ["<leader>P"] = { ':echo expand("%:p")<CR>', silent = true, desc = "Show current file path" },
+        ["<localleader>fb"] = { ':%s/ //g<CR>', silent = true, desc = "remove spaces globally" },
+
+        -- git
+        ["<leader>ggp"] = { ":G push origin HEAD:refs/for/dev<CR>", silent = true, desc = "git push origin to dev" },
+        ["<leader>ggc"] = { ":G commit --amend<CR>", silent = true, desc = "git commit --amend" },
+
+        -- Neotree remapping
+        ["<localleader>e"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Explorer" },
+        ["<localleader>a"] = {
+          function()
+            if vim.bo.filetype == "neo-tree" then
+              vim.cmd.wincmd "p"
+            else
+              vim.cmd.Neotree "focus"
+            end
+          end,
+          desc = "Toggle Explorer Focus",
+        },
+
+        -- markdown
+        -- ["<leader>m"] = sections.m,
+        -- ["<leader>mp"] = { ":MarkdownPreview<CR>", silent = true, desc = "Markdown Preview" },
+        -- ["<leader>mc"] = { ":MarkdownPreviewStop<CR>", silent = true, desc = "Markdown Preview Stop" },
+
         -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()
@@ -67,6 +146,17 @@ return {
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
       },
+      x = {
+        ["<leader>k"] = { ":move'<-2<CR>gv=gv", silent = true, desc = "Move selection up" },
+        ["<leader>j"] = { ":move'>+<CR>gv=gv", silent = true, desc = "Move selection down" },
+      },
     },
   },
+  },
+
+  -- {
+  --   "windwp/nvim-autopairs",
+  --   event = "InsertEnter",
+  -- },
+
 }
