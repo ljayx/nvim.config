@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- Customize Mason plugins
 
@@ -11,7 +11,15 @@ return {
     opts = {
       ensure_installed = {
         "lua_ls",
-        -- add more arguments for adding more language servers
+        "clangd",
+        "pyright",
+        "bashls",
+        "jsonls",
+        "yamlls",
+        "dockerls",
+        "marksman",
+        "html",
+        "cmake"
       },
     },
   },
@@ -22,7 +30,13 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
-        -- add more arguments for adding more null-ls sources
+        "clang-format",
+        "shfmt",
+        "cmakelang",
+        "yapf",
+        "isort",
+        "cbfmt",
+        "prettierd",
       },
     },
   },
@@ -31,8 +45,7 @@ return {
     -- overrides `require("mason-nvim-dap").setup(...)`
     opts = {
       ensure_installed = {
-        "python",
-        -- add more arguments for adding more debuggers
+        -- "python",
       },
     },
   },
