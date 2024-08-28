@@ -24,7 +24,7 @@ return {
                 Explain = function(gp, params)
                     local template = "I have the following code from {{filename}}:\n\n"
                         .. "```{{filetype}}\n{{selection}}\n```\n\n"
-                        .. "Please respond by explaining the code above."
+                        .. "Please respond by explaining the code above. 请用中文回答。"
                     local agent = gp.get_chat_agent()
                     gp.Prompt(params, gp.Target.popup, agent, template)
                 end,
@@ -42,7 +42,7 @@ return {
                 CodeReview = function(gp, params)
                     local template = "I have the following code from {{filename}}:\n\n"
                         .. "```{{filetype}}\n{{selection}}\n```\n\n"
-                        .. "Please analyze for code smells and suggest improvements."
+                        .. "Please analyze for code smells and suggest improvements. 请用中文回答。"
                     local agent = gp.get_chat_agent()
                     gp.Prompt(params, gp.Target.enew("markdown"), agent, template)
                 end,
@@ -168,7 +168,7 @@ return {
             ),
 
             vim.keymap.set("v", "<localleader>gh", ":<C-u>'<,'>GpTranslator<cr>", keymapOptions "Translate"),
-            vim.keymap.set("v", "<localleader>gd", ":<C-u>'<,'>GpCodeReview<cr>", keymapOptions "Code Review"),
+            vim.keymap.set("v", "<localleader>gr", ":<C-u>'<,'>GpCodeReview<cr>", keymapOptions "Code Review"),
             vim.keymap.set("v", "<localleader>ge", ":<C-u>'<,'>GpExplain<cr>", keymapOptions "Code Explain"),
             vim.keymap.set("n", "<localleader>ggx", "<cmd>GpChatDelete<cr>", keymapOptions "Delete current Chat"),
             vim.keymap.set("n", "<localleader>gk", "<cmd>GpBufferChatNew<cr>", keymapOptions "Buffer Chat New"),
