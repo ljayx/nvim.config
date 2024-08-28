@@ -168,7 +168,7 @@ return {
             ),
 
             vim.keymap.set("v", "<localleader>gh", ":<C-u>'<,'>GpTranslator<cr>", keymapOptions "Translate"),
-            vim.keymap.set("v", "<localleader>gr", ":<C-u>'<,'>GpCodeReview<cr>", keymapOptions "Code Review"),
+            vim.keymap.set("v", "<localleader>gd", ":<C-u>'<,'>GpCodeReview<cr>", keymapOptions "Code Review"),
             vim.keymap.set("v", "<localleader>ge", ":<C-u>'<,'>GpExplain<cr>", keymapOptions "Code Explain"),
             vim.keymap.set("n", "<localleader>ggx", "<cmd>GpChatDelete<cr>", keymapOptions "Delete current Chat"),
             vim.keymap.set("n", "<localleader>gk", "<cmd>GpBufferChatNew<cr>", keymapOptions "Buffer Chat New"),
