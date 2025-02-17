@@ -14,6 +14,9 @@ return {
         -- Required.
         "nvim-lua/plenary.nvim",
         -- "preservim/vim-markdown",
+        "hrsh7th/nvim-cmp",
+        "nvim-telescope/telescope.nvim",
+        "nvim-treesitter/nvim-treesitter",
 
         -- see below for full list of optional dependencies 👇
     },
@@ -28,35 +31,6 @@ return {
             --     path = "~/vaults/work",
             -- },
         },
-
-        -- -- Optional, alternatively you can customize the frontmatter data.
-        -- note_frontmatter_func = function(note)
-        --     -- This is equivalent to the default frontmatter function.
-        --     local out = { id = note.id, aliases = note.aliases, tags = note.tags }
-        --     -- local out = { id = note.id, aliases = "", tags = note.tags }
-        --     -- `note.metadata` contains any manually added fields in the frontmatter.
-        --     -- So here we just make sure those fields are kept in the frontmatter.
-        --     if note.metadata ~= nil and require("obsidian").util.table_length(note.metadata) > 0 then
-        --         for k, v in pairs(note.metadata) do
-        --             out[k] = v
-        --         end
-        --     end
-        --     return out
-        -- end,
-
-        -- -- Optional, alternatively you can customize the frontmatter data.
-        -- note_frontmatter_func = function(note)
-        --     -- This is equivalent to the default frontmatter function.
-        --     local out = { id = note.id, aliases = note.aliases, tags = note.tags }
-        --     -- `note.metadata` contains any manually added fields in the frontmatter.
-        --     -- So here we just make sure those fields are kept in the frontmatter.
-        --     if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-        --         for k, v in pairs(note.metadata) do
-        --             out[k] = v
-        --         end
-        --     end
-        --     return out
-        -- end,
 
         -- Optional, alternatively you can customize the frontmatter data.
         ---@return table
@@ -83,33 +57,6 @@ return {
         -- sort_by = "modified",
         -- sort_reversed = true,
 
-        -- -- Specify how to handle attachments.
-        -- attachments = {
-        --     -- The default folder to place images in via `:ObsidianPasteImg`.
-        --     -- If this is a relative path it will be interpreted as relative to the vault root.
-        --     -- You can always override this per image by passing a full path to the command instead of just a filename.
-        --     img_folder = "assets/imgs", -- This is the default
-        --     -- A function that determines the text to insert in the note when pasting an image.
-        --     -- It takes two arguments, the `obsidian.Client` and a plenary `Path` to the image file.
-        --     -- This is the default implementation.
-        --     ---@param client obsidian.Client
-        --     ---@param path Path the absolute path to the image file
-        --     ---@return string
-        --     img_text_func = function(client, path)
-        --         local link_path
-        --         local vault_relative_path = client:vault_relative_path(path)
-        --         if vault_relative_path ~= nil then
-        --             -- Use relative path if the image is saved in the vault dir.
-        --             link_path = vault_relative_path
-        --         else
-        --             -- Otherwise use the absolute path.
-        --             link_path = tostring(path)
-        --         end
-        --         local display_name = vim.fs.basename(link_path)
-        --         return string.format("![%s](%s)", display_name, link_path)
-        --     end,
-        -- },
-
         -- Specify how to handle attachments.
         attachments = {
             -- The default folder to place images in via `:ObsidianPasteImg`.
@@ -134,6 +81,14 @@ return {
                 path = client:vault_relative_path(path) or path
                 return string.format("![%s](%s)", path.name, path)
             end,
+        },
+
+        -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
+        completion = {
+            -- Set to false to disable completion.
+            nvim_cmp = true,
+            -- Trigger completion at 2 chars.
+            min_chars = 2,
         },
 
         -- Optional, key mappings.

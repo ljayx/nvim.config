@@ -160,6 +160,11 @@ return {
                     ["<leader>k"] = { ":move'<-2<CR>gv=gv", silent = true, desc = "Move selection up" },
                     ["<leader>j"] = { ":move'>+<CR>gv=gv", silent = true, desc = "Move selection down" },
                 },
+                v = {
+                    -- move cursor
+                    ["gh"] = { "g^", desc = "Cursor to line begin" },
+                    ["gl"] = { "g$", desc = "Cursor to line end" },
+                }
             },
         },
     },
