@@ -6,20 +6,48 @@ return {
     opts = {
         -- add any opts here
         -- for example
-        provider = "openai",
-        openai = {
-            endpoint = "https://burn.hair/v1",
-            model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
-            timeout = 30000, -- timeout in milliseconds
-            temperature = 0, -- adjust if needed
-            max_tokens = 4096,
+        -- provider = "openai",
+        provider = "xxx",
+        auto_suggestions_provider = "copilot",
+        providers = {
+            xxx = {
+                __inherited_from = "openai",
+                endpoint = "https://api.xxx.com/v1",
+                model = "claude-sonnet-4-20250514", -- your desired model (or use gpt-4o, etc.)
+                api_key_name = "XXX_API_KEY",
+                extra_request_body = {
+                    timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+                    temperature = 0.75,
+                    max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+                    --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+                },
+            },
+            moonshot = {
+                endpoint = "https://api.moonshot.ai/v1",
+                model = "kimi-k2-0711-preview",
+                timeout = 30000, -- Timeout in milliseconds
+                extra_request_body = {
+                    temperature = 0.75,
+                    max_tokens = 32768,
+                },
+            },
+            web_search_engine = {
+                provider = "tavily",
+                providers = {
+                    tavily = {
+                        api_key_name = "TAVILY_API_KEY",
+                        extra_request_body = {
+                            include_answer = "basic",
+                        },
+                    },
+                },
+            },
         },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+
     dependencies = {
-        "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
         --- The below dependencies are optional,
@@ -27,6 +55,8 @@ return {
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
         "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
         "ibhagwan/fzf-lua", -- for file_selector provider fzf
+        "stevearc/dressing.nvim", -- for input provider dressing
+        "folke/snacks.nvim", -- for input provider snacks
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua", -- for providers='copilot'
         {

@@ -58,6 +58,7 @@ return {
                     smartindent = true, -- ljay: Smart autoindenting on new lines
                     shiftwidth = 4, -- number of space inserted for indentation
                     tabstop = 4, -- number of space in a tab
+                    clipboard = "unnamedplus"
                 },
                 g = { -- vim.g.<key>
                     -- configure global vim variables (vim.g)
@@ -148,6 +149,10 @@ return {
                     ["<leader>mp"] = { ":MarkdownPreview<CR>", silent = true, desc = "Markdown Preview" },
                     ["<leader>mc"] = { ":MarkdownPreviewStop<CR>", silent = true, desc = "Markdown Preview Stop" },
                     ["<leader>mg"] = { ":Glow<CR>", silent = true, desc = "Markdown Preview with Glow" },
+                    ["<leader>mi"] = { ":ObsidianPasteImg<CR>", silent = true, desc = "Obsidian paste image" },
+
+                    -- avante
+                    ["<leader>aC"] = { ":AvanteClear<CR>", silent = true, desc = "Clear avante chat history" },
 
                     -- tables with just a `desc` key will be registered with which-key if it's installed
                     -- this is useful for naming menus
