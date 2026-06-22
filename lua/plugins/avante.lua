@@ -1,88 +1,88 @@
 return {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-    opts = {
-        -- add any opts here
-        -- for example
-        -- provider = "openai",
-        provider = "xxx",
-        auto_suggestions_provider = "copilot",
-        providers = {
-            xxx = {
-                __inherited_from = "openai",
-                endpoint = "https://api.xxx.com/v1",
-                model = "claude-sonnet-4-20250514", -- your desired model (or use gpt-4o, etc.)
-                api_key_name = "XXX_API_KEY",
-                extra_request_body = {
-                    timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-                    temperature = 0.75,
-                    max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-                    --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-                },
-            },
-            moonshot = {
-                endpoint = "https://api.moonshot.ai/v1",
-                model = "kimi-k2-0711-preview",
-                timeout = 30000, -- Timeout in milliseconds
-                extra_request_body = {
-                    temperature = 0.75,
-                    max_tokens = 32768,
-                },
-            },
-            web_search_engine = {
-                provider = "tavily",
-                providers = {
-                    tavily = {
-                        api_key_name = "TAVILY_API_KEY",
-                        extra_request_body = {
-                            include_answer = "basic",
-                        },
-                    },
-                },
-            },
-        },
-    },
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-        --- The below dependencies are optional,
-        "echasnovski/mini.pick", -- for file_selector provider mini.pick
-        "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-        "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-        "ibhagwan/fzf-lua", -- for file_selector provider fzf
-        "stevearc/dressing.nvim", -- for input provider dressing
-        "folke/snacks.nvim", -- for input provider snacks
-        "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        "zbirenbaum/copilot.lua", -- for providers='copilot'
-        {
-            -- support for image pasting
-            "HakonHarnes/img-clip.nvim",
-            event = "VeryLazy",
-            opts = {
-                -- recommended settings
-                default = {
-                    embed_image_as_base64 = false,
-                    prompt_for_file_name = false,
-                    drag_and_drop = {
-                        insert_mode = true,
-                    },
-                    -- required for Windows users
-                    use_absolute_path = true,
-                },
-            },
-        },
-        {
-            -- Make sure to set this up properly if you have lazy=true
-            "MeanderingProgrammer/render-markdown.nvim",
-            opts = {
-                file_types = { "markdown", "Avante" },
-            },
-            ft = { "markdown", "Avante" },
-        },
-    },
+    -- "yetone/avante.nvim",
+    -- event = "VeryLazy",
+    -- lazy = false,
+    -- version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    -- opts = {
+    --     -- add any opts here
+    --     -- for example
+    --     -- provider = "openai",
+    --     provider = "xxx",
+    --     auto_suggestions_provider = "copilot",
+    --     providers = {
+    --         xxx = {
+    --             __inherited_from = "openai",
+    --             endpoint = "https://api.xxx.com/v1",
+    --             model = "claude-sonnet-4-20250514", -- your desired model (or use gpt-4o, etc.)
+    --             api_key_name = "XXX_API_KEY",
+    --             extra_request_body = {
+    --                 timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+    --                 temperature = 0.75,
+    --                 max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+    --                 --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+    --             },
+    --         },
+    --         moonshot = {
+    --             endpoint = "https://api.moonshot.ai/v1",
+    --             model = "kimi-k2-0711-preview",
+    --             timeout = 30000, -- Timeout in milliseconds
+    --             extra_request_body = {
+    --                 temperature = 0.75,
+    --                 max_tokens = 32768,
+    --             },
+    --         },
+    --         web_search_engine = {
+    --             provider = "tavily",
+    --             providers = {
+    --                 tavily = {
+    --                     api_key_name = "TAVILY_API_KEY",
+    --                     extra_request_body = {
+    --                         include_answer = "basic",
+    --                     },
+    --                 },
+    --             },
+    --         },
+    --     },
+    -- },
+    -- -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    -- build = "make",
+    --
+    -- dependencies = {
+    --     "nvim-lua/plenary.nvim",
+    --     "MunifTanjim/nui.nvim",
+    --     --- The below dependencies are optional,
+    --     "echasnovski/mini.pick", -- for file_selector provider mini.pick
+    --     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+    --     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+    --     "ibhagwan/fzf-lua", -- for file_selector provider fzf
+    --     "stevearc/dressing.nvim", -- for input provider dressing
+    --     "folke/snacks.nvim", -- for input provider snacks
+    --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+    --     "zbirenbaum/copilot.lua", -- for providers='copilot'
+    --     {
+    --         -- support for image pasting
+    --         "HakonHarnes/img-clip.nvim",
+    --         event = "VeryLazy",
+    --         opts = {
+    --             -- recommended settings
+    --             default = {
+    --                 embed_image_as_base64 = false,
+    --                 prompt_for_file_name = false,
+    --                 drag_and_drop = {
+    --                     insert_mode = true,
+    --                 },
+    --                 -- required for Windows users
+    --                 use_absolute_path = true,
+    --             },
+    --         },
+    --     },
+    --     {
+    --         -- Make sure to set this up properly if you have lazy=true
+    --         "MeanderingProgrammer/render-markdown.nvim",
+    --         opts = {
+    --             file_types = { "markdown", "Avante" },
+    --         },
+    --         ft = { "markdown", "Avante" },
+    --     },
+    -- },
 }
