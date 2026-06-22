@@ -12,7 +12,7 @@ return {
   opts = {
     -- Configuration table of features provided by AstroLSP
     features = {
-      codelens = true, -- enable/disable codelens refresh on start
+      codelens = false, -- enable/disable codelens refresh on start
       inlay_hints = false, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
@@ -45,6 +45,64 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      gopls = {
+        root_dir = function(fname)
+          local util = require "lspconfig.util"
+          return util.root_pattern("go.work", "go.mod")(fname)
+        end,
+        settings = {
+          gopls = {
+            gofumpt = false,
+            staticcheck = false,
+            usePlaceholders = false,
+            completeUnimported = false,
+            semanticTokens = false,
+            vulncheck = "Off",
+            diagnosticsDelay = "2s",
+            analyses = {
+              unusedparams = false,
+              unusedwrite = false,
+              nilness = false,
+              shadow = false,
+              unusedvariable = false,
+              fieldalignment = false,
+              useany = false,
+            },
+            codelenses = {
+              gc_details = false,
+              generate = false,
+              regenerate_cgo = false,
+              run_govulncheck = false,
+              test = false,
+              tidy = false,
+              upgrade_dependency = false,
+              vendor = false,
+            },
+            hints = {
+              assignVariableTypes = false,
+              compositeLiteralFields = false,
+              compositeLiteralTypes = false,
+              constantValues = false,
+              functionTypeParameters = false,
+              parameterNames = false,
+              rangeVariableTypes = false,
+            },
+            directoryFilters = {
+              "-.git",
+              "-.idea",
+              "-.vscode",
+              "-output",
+              "-node_modules",
+              "-vendor",
+              "-third_party",
+              "-generated",
+              "-bazel-bin",
+              "-bazel-out",
+              "-bazel-testlogs",
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -98,8 +156,12 @@ return {
     -- A custom `on_attach` function to be run after the default `on_attach` function
     -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
     on_attach = function(client, bufnr)
-      -- this would disable semanticTokensProvider for all clients
-      -- client.server_capabilities.semanticTokensProvider = nil
+      if client.name == "gopls" then
+        client.server_capabilities.semanticTokensProvider = nil
+        client.server_capabilities.codeLensProvider = nil
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end
     end,
   },
 }

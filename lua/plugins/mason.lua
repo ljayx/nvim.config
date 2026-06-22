@@ -19,7 +19,8 @@ return {
         "dockerls",
         "marksman",
         "html",
-        "cmake"
+        "cmake",
+        "gopls",
       },
     },
   },
